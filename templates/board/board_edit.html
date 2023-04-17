@@ -1,0 +1,30 @@
+{% extends 'nav.html' %}
+{% block content %}
+
+<div class="container">
+    {% block title %}
+    <h2 class="flex-center">수정</h2>
+    {% endblock %}
+    <div class="flex-center">
+        <article style="width:500px;">
+            <form method="POST" action="{% url 'board_edit' board_id=board.board_id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <textarea name="content" id="content" cols="30" rows="5" placeholder="내용" maxlength="200"
+                    required>{{ board.content }}</textarea>
+                <br>
+                {% if board.img %}
+                <img id="preview" src="{{ board.img.url }}" alt="Image preview" style="width:100px; max-height:100px;">
+                <br>
+                {% else %}
+                <img id="preview" alt="Image preview" style="display:none; width:100px; max-height:100px;">
+                <br>
+                {% endif %}
+                <input type="file" name="img" id="img" accept="image/*" onchange="previewImage(this);">
+                <br>
+                <button type="submit">수정완료</button>
+            </form>
+        </article>
+    </div>
+</div>
+
+{% endblock content%}
